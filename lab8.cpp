@@ -6,16 +6,20 @@ using namespace std;
 // Input: 'Word'
 // output: e.g. .... . ._.. etc
 
+string Letters = "abcdefghijklmnopqrstuvwxyz";
+string mCode[] = { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.." };
+
+
 class Message { 
 	protected: string msg;
-	private:
-		virtual void printInfo(void);
+
 	public:
+		virtual void printInfo(void);
 		// Constructors
 		Message();
 		Message(string m);
 		//Destructor
-	//	~Message();
+		~Message();
 };
 
 Message::Message() { 
@@ -31,7 +35,10 @@ Message::Message(string m) {
 
 void Message::printInfo(void) {
 	// Print message string to stdout
-	cout << msg;
+	cout << msg << endl;
+}
+
+Message::~Message() {
 }
 	
 
@@ -41,11 +48,20 @@ class morseCodeMessage : public Message {
 		int index;
 		string *translated_msg;
 	public:
-		morseCodeMessage();
+
 		void translate();
 		// Override virtual:
 		void printInfo();
+		// Constructor
+		morseCodeMessage();
+		// Destructor
+		~morseCodeMessage();
 };
+
+void morseCodeMessage::printInfo() {
+	cout << "Original text: " << msg << endl;
+	cout << "Morse code   : " << translated_msg << endl;
+}
 
 class messageStack {
 	public:
@@ -60,10 +76,12 @@ class messageStack {
 
 int main(int argc, char **argv) {
 
-	//Message m1 = Message();
+	Message m1 = Message();
+	m1.printInfo();
 	if(argc > 1)
 	{
 		Message m2 = Message(argv[1]);
+		m2.printInfo();
 	}
 
 	return 0;
