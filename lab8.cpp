@@ -5,6 +5,7 @@ using namespace std;
 
 // Input: 'Word'
 // output: e.g. .... . ._.. etc
+// See L14
 
 #define NUM_LETTERS 26
 
@@ -47,7 +48,6 @@ Message::~Message() {
 
 class morseCodeMessage : public Message {
 	private:
-		int index;
 		string *translated_msg;
 	public:
 
@@ -55,12 +55,12 @@ class morseCodeMessage : public Message {
 		// Override virtual:
 		void printInfo();
 		// Constructor
-		morseCodeMessage(string msg);
+		morseCodeMessage();
 		// Destructor
 		~morseCodeMessage();
 };
 
-morseCodeMessage::morseCodeMessage(string msg) {
+morseCodeMessage::morseCodeMessage() {
 	translated_msg = new string[msg.length()];
 }
 
@@ -96,20 +96,39 @@ void morseCodeMessage::printInfo() {
 
 class messageStack {
 	public:
-		// Fixed stack size -> replaced with LL eventually
+		// Fixed stack size
+		// replace with LL eventually
 		Message *stack[10]; 
-		messageStack();
+		messageStack(Message);
+		int stack_top_index;
+		int num_obj;
+		//~messageStack();
 	private:
-		void pop();
-		void push(Message);
+		void pop();         //LIFO
+		void push(Message); //LIFO
 		void printStack();
 };
 
+messageStack::messageStack(Message m) {
+	stack_top_index = 9;
+	num_obj = 0;
+	push(m);
+}
+
+void messageStack::push(Message m) {
+	if(num_obj == 0)
+	{
+		stack[stack_top_index] = m;
+	}
+
+	
+
+
 int main(int argc, char **argv) {
 
-	Message m1 = Message();
+	//Message m1 = Message();
 	//m1.printInfo();
-	morseCodeMessage m2 = morseCodeMessage("foo");
+	morseCodeMessage m2 = morseCodeMessage();
 	m2.translate();
 	m2.printInfo();
 
