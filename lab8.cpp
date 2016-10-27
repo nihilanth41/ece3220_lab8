@@ -6,6 +6,8 @@ using namespace std;
 // Input: 'Word'
 // output: e.g. .... . ._.. etc
 
+#define NUM_LETTERS 26
+
 string Letters = "abcdefghijklmnopqrstuvwxyz";
 string mCode[] = { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.." };
 
@@ -53,14 +55,43 @@ class morseCodeMessage : public Message {
 		// Override virtual:
 		void printInfo();
 		// Constructor
-		morseCodeMessage();
+		morseCodeMessage(string msg);
 		// Destructor
 		~morseCodeMessage();
 };
 
+morseCodeMessage::morseCodeMessage(string msg) {
+	translated_msg = new string[msg.length()];
+}
+
+morseCodeMessage::~morseCodeMessage() {
+	delete[] translated_msg;
+}
+
+
+void morseCodeMessage::translate() {
+	for(int i=0; i<msg.length(); i++)
+	{
+		for(int j=0; j<NUM_LETTERS; j++)
+		{
+			if(msg[i] == Letters[j])
+			{
+				translated_msg[i] = mCode[j];
+				break;
+			}
+		}
+	}
+}
+		
+
 void morseCodeMessage::printInfo() {
 	cout << "Original text: " << msg << endl;
-	cout << "Morse code   : " << translated_msg << endl;
+	cout << "Morse code: ";
+	for(int i=0; i<msg.length(); i++)
+	{
+		cout << translated_msg[i];
+	}
+	cout << endl;
 }
 
 class messageStack {
@@ -77,12 +108,16 @@ class messageStack {
 int main(int argc, char **argv) {
 
 	Message m1 = Message();
-	m1.printInfo();
-	if(argc > 1)
-	{
-		Message m2 = Message(argv[1]);
-		m2.printInfo();
-	}
+	//m1.printInfo();
+	morseCodeMessage m2 = morseCodeMessage("foo");
+	m2.translate();
+	m2.printInfo();
+
+	//if(argc > 1)
+	//{
+	//	Message m2 = Message(argv[1]);
+	//	m2.printInfo();
+	//}
 
 	return 0;
 }
