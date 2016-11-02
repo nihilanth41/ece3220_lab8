@@ -122,14 +122,13 @@ messageStack::messageStack(Message *m) {
 
 void messageStack::printStack(void) {
 	cout << "Stack top index: " << stack_top_index << endl;
-	cout << "BEGIN PRINTINFO\n" << endl;
+	cout << "-------------------" << endl;
 	
 	for(int i=stack_top_index; i<10; i++)
 	{
 		cout << "Current index: " << i << endl;
 		stack[i]->printInfo();
 	}
-	cout << "END PRINTINFO\n" << endl;
 }
 		
 
@@ -196,19 +195,12 @@ int main(int argc, char **argv) {
 	ms1.pop();
 	ms1.printStack();
 
+// My terrible stack implementation doesn't handle empty or full case correctly
 //	ms1.pop();
 //	ms1.printStack();
-	
-	ms1.push(&m1);
-	ms1.printStack();
-	
-	
 
-
-
-
-
-
+//	ms1.push(&m1);
+//	ms1.printStack();
 
 	return 0;
 }
