@@ -103,18 +103,18 @@ class messageStack {
 		// Fixed stack size
 		// replace with LL eventually
 		Message *stack[10]; 
-		messageStack(Message);
+		messageStack(Message *);
 		int stack_top_index;
 		int num_obj;
 		//~messageStack();
 		void pop();         //LIFO
-		void push(Message); //LIFO
+		void push(Message *); //LIFO
 		void printStack();
 	private:
 
 };
 
-messageStack::messageStack(Message m) {
+messageStack::messageStack(Message *m) {
 	stack_top_index = 9;
 	num_obj = 0;
 	push(m);
@@ -146,10 +146,10 @@ void messageStack::pop(void) {
 }
 
 
-void messageStack::push(Message m) {
+void messageStack::push(Message *m) {
 	if(num_obj == 0)
 	{
-		stack[stack_top_index] = &m;
+		stack[stack_top_index] = m;
 	}
 	else
 	{
@@ -158,7 +158,7 @@ void messageStack::push(Message m) {
 			cout << "Stack full\n"; 
 			return;
 		}
-		stack[--stack_top_index] = &m;
+		stack[--stack_top_index] = m;
 	}
 	num_obj++;
 
@@ -183,16 +183,16 @@ int main(int argc, char **argv) {
 	morseCodeMessage m3 = morseCodeMessage();
 
 
-	messageStack ms1 = messageStack(m1);
-	ms1.push(m2);
-	ms1.push(m3);
+	messageStack ms1 = messageStack(&m1);
+	ms1.push(&m2);
+	ms1.push(&m3);
 	ms1.pop();
 	ms1.printStack();
 	ms1.pop();
 	ms1.printStack();
 	ms1.pop();
 	ms1.printStack();
-	ms1.push(m1);
+	ms1.push(&m1);
 	ms1.printStack();
 	
 	
