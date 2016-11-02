@@ -121,17 +121,19 @@ messageStack::messageStack(Message *m) {
 }
 
 void messageStack::printStack(void) {
-	for(int i=10; i>stack_top_index; i--)
+	cout << "Stack top index: " << stack_top_index << endl;
+	cout << "BEGIN PRINTINFO\n" << endl;
+	
+	for(int i=stack_top_index; i<10; i++)
 	{
-		cout << "i" << i << endl;
-		cout << "index: " << stack_top_index << endl;
-		cout << "num obj: " << num_obj << endl;
+		cout << "Current index: " << i << endl;
+		stack[i]->printInfo();
 	}
+	cout << "END PRINTINFO\n" << endl;
 }
 		
 
 void messageStack::pop(void) {
-
 	if(num_obj == 0)
 	{
 		stack_top_index = 9;
@@ -141,7 +143,7 @@ void messageStack::pop(void) {
 	else
 	{
 		num_obj--;
-		stack_top_index++;
+		(stack_top_index > 9) ? stack_top_index=9 : stack_top_index++;
 	}
 }
 
@@ -186,12 +188,17 @@ int main(int argc, char **argv) {
 	messageStack ms1 = messageStack(&m1);
 	ms1.push(&m2);
 	ms1.push(&m3);
+
+	ms1.printStack();
+	
 	ms1.pop();
 	ms1.printStack();
 	ms1.pop();
 	ms1.printStack();
-	ms1.pop();
-	ms1.printStack();
+
+//	ms1.pop();
+//	ms1.printStack();
+	
 	ms1.push(&m1);
 	ms1.printStack();
 	
